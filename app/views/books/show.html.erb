@@ -4,9 +4,18 @@
 <div>Author: <%= @book.author %></div>
 <%= button_to "Edit", edit_book_path, method: :get %>
 <%= button_to "Delete", @book, method: :delete %>
-
-
-<%= form_with model: [ @book ] do |form| %>
+<h2>Comments</h2>
+<% @book.comments.each do |comment| %>
+  <div>
+    <strong><%= comment.commenter %></strong>
+    <%= comment.body %>
+  </div>
+<% end %>
+<%= form_with model: [ @book, @book.comments.build ] do |form| %>
+  <div>
+    <div><%= form.label :commenter %></div>
+    <div><%= form.text_field :commenter %></div>
+  </div>
   <div>
     <div><%= form.label :body %></div>
     <div><%= form.text_area :body %></div>
